@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI News Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .chat-container {
+      width: 400px;
+      height: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    .input-box input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+    .input-box button {
+      padding: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    .bot, .user {
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .bot {
+      background: #e6f2ff;
+      align-self: flex-start;
+    }
+    .user {
+      background: #d1ffd1;
+      align-self: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="messages" id="chat"></div>
+    <div class="input-box">
+      <input type="text" id="userInput" placeholder="Type something...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chat = document.getElementById("chat");
+
+    function addMessage(message, sender) {
+      const msg = document.createElement("div");
+      msg.className = sender;
+      msg.textContent = message;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, "user");
+      input.value = "";
+
+      if (text.toLowerCase().includes("news")) {
+        addMessage("Fetching latest news...", "bot");
+        const news = await fetchNews();
+        addMessage(news, "bot");
+      } else {
+        addMessage("Please type 'news' to get latest updates.", "bot");
+      }
+    }
+
+    async function fetchNews() {
+      const apiKey = "YOUR_NEWS_API_KEY"; // Replace this with your NewsAPI.org key
+      const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=${b59aa226244af8049ed2c3df40024}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!data.articles) return "Koi news nahi mili.";
+
+        const summaries = data.articles.slice(0, 3).map((article, index) => {
+          return `${index + 1}. ${article.title}\n${article.description || "No description"}`;
+        });
+        return summaries.join("\n\n");
+      } catch (err) {
+        return "Error fetching news. Check API key.";
+      }
+    }
+  </script>
+</body>
+</html>
