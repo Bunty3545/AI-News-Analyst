@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Analyst</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <header>
+        <h1>🧠 AI News Analyst</h1>
+        <p>Get real-time news summaries powered by AI</p>
+    </header>
+
+    <main>
+        <!-- Section for Filters -->
+        <section class="controls" aria-labelledby="controls-heading">
+            <h2 id="controls-heading" class="visually-hidden">News Filter Controls</h2>
+
+            <form id="news-filter-form" aria-describedby="form-description">
+                <p id="form-description" class="visually-hidden">Choose your country and news category</p>
+
+                <fieldset>
+                    <legend>Country</legend>
+                    <label for="country-select">Select Country:</label>
+                    <select id="country-select" name="country" required>
+                        <option value="in" selected>India</option>
+                        <option value="us">United States</option>
+                        <option value="gb">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                        <option value="jp">Japan</option>
+                    </select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Category</legend>
+                    <label for="category-select">Select Category:</label>
+                    <select id="category-select" name="category" required>
+                        <option value="general" selected>General</option>
+                        <option value="business">Business</option>
+                        <option value="technology">Technology</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="health">Health</option>
+                        <option value="science">Science</option>
+                        <option value="sports">Sports</option>
+                    </select>
+                </fieldset>
+               
+                <button type="submit" id="fetch-button">Get News</button>
+            </form>
+        </section>
+
+        <!-- Section for displaying news -->
+        <section class="news-display" aria-live="polite" aria-atomic="true">
+            <div id="loading" role="status" class="loading" style="display: none;">
+                <span class="spinner"></span> Loading news...
+            </div>
+
+            <div id="error-message" class="error-message" role="alert" style="display: none;">
+                Unable to fetch news. Please try again later.
+            </div>
+
+            <div id="news-container" class="news-container">
+                <!-- Articles inserted dynamically here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by <a href="https://newsapi.org" target="_blank" rel="noopener noreferrer">NewsAPI</a> &amp; <a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener noreferrer">Gemini AI</a></p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

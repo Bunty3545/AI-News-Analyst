@@ -1,0 +1,22 @@
+pip install Flask requests google-generativeai python-dotenv
+
+
+pip install google-generativeai
+
+
+pip freeze > requirements.txt  
+
+ pip list
+
+
+ pip install Flask python-dotenv
+
+                                                     
+
+   pip install -r requirements.txt 
+
+python app.py     
+
+
+
+ http://127.0.0.1:5001
